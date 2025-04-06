@@ -40,15 +40,19 @@ export class MemStorage implements IStorage {
     this.userId = 1;
     this.bookingId = 1;
     
-    // Create admin user by default
-    this.createUser({
+    // Create a pre-hashed admin password (format: hash.salt)
+    // This represents the hashed version of "adminpassword"
+    const hashedAdminPassword = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918.2ea70676027d01c7600d94a5972464c5";
+    
+    // Create admin user with pre-hashed password
+    const adminUser: User = {
+      id: this.userId++,
       username: "admin@robomow.com",
-      password: "adminpassword",
-    }).then(user => {
-      // Update user to be an admin
-      const adminUser = {...user, isAdmin: true};
-      this.users.set(user.id, adminUser);
-    });
+      password: hashedAdminPassword,
+      isAdmin: true
+    };
+    
+    this.users.set(adminUser.id, adminUser);
     
     this.sessionStore = new MemoryStore({
       checkPeriod: 86400000, // Clear expired sessions every day
