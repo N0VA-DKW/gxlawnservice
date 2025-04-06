@@ -185,12 +185,18 @@ export function BookingTable() {
                     {`${format(new Date(booking.serviceDate), "MMM dd, yyyy")} (${getTimeLabel(booking.serviceTime)})`}
                   </td>
                   <td className="py-4 px-4 whitespace-nowrap">
-                    <StatusBadge status={booking.status} />
+                    <StatusBadge status={booking.status as "pending" | "approved" | "completed" | "cancelled"} />
                   </td>
                   <td className="py-4 px-4 whitespace-nowrap">${booking.price.toFixed(2)}</td>
                   <td className="py-4 px-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex space-x-2 justify-end">
-                      <Button variant="ghost" size="icon" className="text-primary hover:text-primary-dark" title="View">
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="text-primary hover:text-primary-dark" 
+                        title="View Details"
+                        onClick={() => window.location.href = `/admin/bookings/${booking.id}`}
+                      >
                         <Eye className="w-5 h-5" />
                       </Button>
                       
