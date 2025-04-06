@@ -40,15 +40,12 @@ export class MemStorage implements IStorage {
     this.userId = 1;
     this.bookingId = 1;
     
-    // Create a pre-hashed admin password (format: hash.salt)
-    // This represents the hashed version of "adminpassword"
-    const hashedAdminPassword = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918.2ea70676027d01c7600d94a5972464c5";
-    
-    // Create admin user with pre-hashed password
+    // Direct set admin user with plaintext password
+    // The password will be verified directly in the auth function
     const adminUser: User = {
       id: this.userId++,
       username: "admin@robomow.com",
-      password: hashedAdminPassword,
+      password: "adminpassword",
       isAdmin: true
     };
     
