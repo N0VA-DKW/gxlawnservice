@@ -7,6 +7,7 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
+import { useLocation } from "wouter";
 import {
   Check,
   ClipboardList,
@@ -21,6 +22,7 @@ export function BookingTable() {
   const [filter, setFilter] = useState<BookingStatus | "all">("all");
   const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
+  const [_, setLocation] = useLocation();
 
   const { data: bookings, isLoading } = useQuery<Booking[]>({
     queryKey: ["/api/admin/bookings"],
@@ -195,7 +197,7 @@ export function BookingTable() {
                         size="icon" 
                         className="text-primary hover:text-primary-dark" 
                         title="View Details"
-                        onClick={() => window.location.href = `/admin/bookings/${booking.id}`}
+                        onClick={() => setLocation(`/admin/bookings/${booking.id}`)}
                       >
                         <Eye className="w-5 h-5" />
                       </Button>

@@ -22,7 +22,7 @@ export default function BookingDetail() {
   }, []);
   
   const { data: booking, isLoading, error } = useQuery<Booking>({
-    queryKey: ['/api/bookings', bookingId],
+    queryKey: [`/api/bookings/${bookingId}`],
     queryFn: bookingId ? getQueryFn({ on401: "throw" }) : undefined,
     enabled: !!bookingId
   });

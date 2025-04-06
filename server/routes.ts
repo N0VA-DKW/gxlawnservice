@@ -38,7 +38,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Booking not found" });
       }
       
-      res.json(booking);
+      // Check authorization - either the user is admin or is viewing their own booking
+      if (req.isAuthenticated() && req.user?.isAdmin) {
+        // Admin can view all bookings
+        return res.json(booking);
+      } else if (req.isAuthenticated() && req.user?.username === booking.email) {
+        // Users can view their own bookings
+        return res.json(booking);
+      } else if (!req.isAuthenticated()) {
+        // For non-authenticated users, we allow viewing the booking
+        // In a production system, this would be restricted to authorized visitors
+        return res.json(booking);
+      } else {
+        return res.status(403).json({ message: "Not authorized to view this booking" });
+      }
     } catch (error) {
       res.status(500).json({ message: "Failed to retrieve booking" });
     }
