@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<!-- index.html -->
+<script type="module">
+    import {loadModule} from 'https://klesun.github.io/ts-browser/src/ts-browser.js';
+    // language=file-reference
+    const entryScriptPath = './index.ts';
+    loadModule(entryScriptPath).then(indexModule => {
+        return indexModule.default(document.getElementById('composeCont'));
+    });
+</script>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
